@@ -92,8 +92,8 @@ int main() {
         for (int i = 0; i < 3; i++) {
             log("%d {%d}\n", elapsed(), i);
             int ret;
-            while ((ret = snd_pcm_writei(handle, &buffer[0], nFrames - 1))
-                    != nFrames - 1) {
+            while ((ret = snd_pcm_writei(handle, &buffer[0], nFrames))
+                    != nFrames) {
                 if (ret < 0) {
                     log("ALSA error: %s\n", snd_strerror(ret));
                     if ((ret = snd_pcm_recover(handle, ret, 0)) < 0) {
@@ -113,7 +113,7 @@ int main() {
         }
         log("%d before drain\n", elapsed());
         snd_pcm_drain(handle);
-        log("%d after drain\n", elapsed());
+        log("%d after drain\n\n", elapsed());
         sleep(1);
     }
     return 0;
